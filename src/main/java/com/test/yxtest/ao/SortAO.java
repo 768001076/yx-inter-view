@@ -1,5 +1,6 @@
 package com.test.yxtest.ao;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -8,13 +9,20 @@ import java.util.List;
  * @author shijialei
  * @date 2023/2/20
  */
-public interface SortAO {
+public interface SortAO<T> {
 
     /**
      * 获取元数据
-     * @return java.util.List<java.lang.String>
+     * @return java.util.List<T>
      * @author shijialei
      */
-    List<String> getMetadata();
+    List<T> getMetadata();
+
+    /**
+     * 获取排序方法
+     * @return java.util.Comparator<T>
+     * @author shijialei
+     */
+    Comparator<T> getSortMethod();
 
 }

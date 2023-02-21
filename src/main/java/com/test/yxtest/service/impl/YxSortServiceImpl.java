@@ -9,10 +9,8 @@ import com.test.yxtest.vo.SortResultVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.Collator;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -29,9 +27,9 @@ import java.util.stream.Collectors;
 public class YxSortServiceImpl extends ServiceImpl<YxSortMapper, YxSort> implements IYxSortService {
 
     @Override
-    public SortResultVO sort(SortAO sortAO) {
+    public <T> SortResultVO<T> sort(SortAO<T> sortAO) {
         // 排序返回信息
-        SortResultVO sortResultVO = new SortResultVO();
+        SortResultVO<T> sortResultVO = new SortResultVO<T>();
         // 记录请求编号
         sortResultVO.setRequestNumber(UUID.randomUUID().toString());
         // 元数据
@@ -39,7 +37,7 @@ public class YxSortServiceImpl extends ServiceImpl<YxSortMapper, YxSort> impleme
         // 排序数据
         sortResultVO.setSortData(
                 sortResultVO.getMetadata().stream()
-                        .sorted(Collator.getInstance(Locale.CHINA))
+                        .sorted(sortAO.getSortMethod())
                         .collect(Collectors.toList())
         );
         // 保存数据
@@ -50,7 +48,7 @@ public class YxSortServiceImpl extends ServiceImpl<YxSortMapper, YxSort> impleme
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void saveSortInfo(SortResultVO sortResultVO) {
+    public <T> void saveSortInfo(SortResultVO<T> sortResultVO) {
         // 请求编号
         String requestNumber = sortResultVO.getRequestNumber();
         // 当前时间
@@ -60,7 +58,7 @@ public class YxSortServiceImpl extends ServiceImpl<YxSortMapper, YxSort> impleme
                 .map(data -> {
                     YxSort yxSort = new YxSort();
                     yxSort.setRequestNumber(requestNumber);
-                    yxSort.setData(data);
+                    yxSort.setData(data.toString());
                     yxSort.setCreateDate(now);
                     return yxSort;
                 })
@@ -74,7 +72,7 @@ public class YxSortServiceImpl extends ServiceImpl<YxSortMapper, YxSort> impleme
                 .map(data -> {
                     YxSort yxSort = new YxSort();
                     yxSort.setRequestNumber(requestNumber);
-                    yxSort.setData(data);
+                    yxSort.setData(data.toString());
                     yxSort.setSort(sortNum.getAndIncrement());
                     yxSort.setCreateDate(now);
                     return yxSort;

@@ -1,12 +1,14 @@
 package com.test.yxtest.controller;
 
-import com.test.yxtest.ao.EnhanceSortAO;
+import com.test.yxtest.ao.BigDecimalSortAO;
+import com.test.yxtest.ao.StringSortAO;
 import com.test.yxtest.ao.IntegerSortAO;
 import com.test.yxtest.service.IYxSortService;
 import com.test.yxtest.vo.SortResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Controller;
+
+import java.math.BigDecimal;
 
 /**
  * <p>
@@ -30,19 +32,30 @@ public class YxSortController {
      * @author shijialei
      */
     @PostMapping("integerSort")
-    public SortResultVO integerSort(@RequestBody IntegerSortAO integerSortAO){
+    public SortResultVO<Integer> integerSort(@RequestBody IntegerSortAO integerSortAO){
         return yxSortService.sort(integerSortAO);
     }
 
     /**
-     * 增强排序
-     * @param enhanceSortAO 待排序数据
+     * 浮点数值排序
+     * @param bigDecimalSortAO 待排序数据
      * @return com.test.yxtest.vo.SortResultVO
      * @author shijialei
      */
-    @PostMapping("enhanceSort")
-    public SortResultVO enhanceSort(@RequestBody EnhanceSortAO enhanceSortAO){
-        return yxSortService.sort(enhanceSortAO);
+    @PostMapping("bigDecimalSort")
+    public SortResultVO<BigDecimal> bigDecimalSort(@RequestBody BigDecimalSortAO bigDecimalSortAO){
+        return yxSortService.sort(bigDecimalSortAO);
+    }
+
+    /**
+     * 字符排序
+     * @param stringSortAO 待排序数据
+     * @return com.test.yxtest.vo.SortResultVO
+     * @author shijialei
+     */
+    @PostMapping("stringSort")
+    public SortResultVO<String> stringSort(@RequestBody StringSortAO stringSortAO){
+        return yxSortService.sort(stringSortAO);
     }
 
 }

@@ -1,6 +1,5 @@
 package com.test.yxtest.service;
 
-import com.test.yxtest.ao.IntegerSortAO;
 import com.test.yxtest.ao.SortAO;
 import com.test.yxtest.entity.YxSort;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -22,12 +21,12 @@ public interface IYxSortService extends IService<YxSort> {
      * @return com.test.yxtest.vo.SortResultVO
      * @author shijialei
      */
-    SortResultVO sort(SortAO sortAO);
+    <T> SortResultVO<T> sort(SortAO<T> sortAO);
 
     /**
      * 保存排序信息
      * @param sortResultVO 排序结果信息
      * @author shijialei
      */
-    void saveSortInfo(SortResultVO sortResultVO);
+    <T> void saveSortInfo(SortResultVO<T> sortResultVO);
 }

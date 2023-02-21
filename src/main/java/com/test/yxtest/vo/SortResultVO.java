@@ -11,7 +11,7 @@ import java.util.List;
  * @date 2023/2/20
  */
 @Data
-public class SortResultVO {
+public class SortResultVO<T> {
 
     /**
      * 请求编号
@@ -20,10 +20,10 @@ public class SortResultVO {
     /**
      * 元数据
      */
-    private List<String> metadata;
+    private List<T> metadata;
     /**
      * 排序数据
      */
-    private List<String> sortData;
+    private List<T> sortData;
 
 }
